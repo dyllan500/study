@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Dyllan\'s Exam Studier"))
         self.pushButton.setText(_translate("MainWindow", "Answer"))
 
     def on_click(self):
