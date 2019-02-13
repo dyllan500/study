@@ -12,22 +12,29 @@ from random import shuffle
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        self.qs = {"Number of Triple Points: ":"N", "Number of Phases: ":"PI", "Delta U : ":"cvDt",
-                   "Detla W: ":" -int(pdv)", "Mass Balance: ":"UA/V2+UA/V3-UA/V1=0", "Delta H: ":"cpDt"}
+        self.qs = {" :im.jpg":"test", " :em.jpg":"test", " :noim.jpg":"test"}
+        self.quesnim = []
+        for i in self.qs:
+            self.quesnim.append(i)
+        shuffle(self.quesnim)
         self.ques = []
         self.images = []
         self.x = 0
         for i in self.qs:
             self.ques.append(i.split(":")[0])
             self.images.append(i.split(":")[1])
-        #TODO add quw=estions to list then shuffle list then split up images and ques
+        for i in range(0, len(self.images)):
+            if self.images[i] == " ":
+                self.images[i] = "noim.jpg"
+            else:
+                pass
+        print(self.images)
+        #TODO add questions to list then shuffle list then split up images and ques
         #TODO add another label on bottom for reshuffle notification, add list of anwsers
         #TODO add first todo code for reshuffle to work, also twick reshuffling to work proparly
         #TODO change window image and title
         #TODO add a no image for questions without images
-        shuffle(self.ques)
-        MainWindow.setObjectName("Dyllan")
-        MainWindow.setWindowTitle("Dyllan's Exam Studier")
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(798, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -38,8 +45,9 @@ class Ui_MainWindow(object):
         self.pushButton.setGeometry(QtCore.QRect(410, 220, 80, 15))
         self.pushButton.setObjectName("pushButton")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(270, 40, 221, 151))
-        pixmap = QPixmap(self.images[0])
+        self.label.setGeometry(QtCore.QRect(270, 40, 520, 320))
+        pixmap = QPixmap(self.images[self.x])
+        pixmap = pixmap.scaled(self.label.width(), self.label.height())
         self.label.setPixmap(QPixmap(pixmap))
         self.label.setObjectName("label")
         self.q = QtWidgets.QLabel(self.centralwidget)
@@ -78,14 +86,18 @@ class Ui_MainWindow(object):
         self.q.setText(self.ques[self.x])
         if self.x < len(self.ques)-1:
             anwser = self.lineEdit.text().lower()
-            real = self.ques[self.x] + ":" + self.images[self.x]
+            if self.images[self.x] != "noim.jpg":
+                real = self.ques[self.x] + ":" + self.images[self.x]
+            else:
+                real = self.ques[self.x] + ": "
 
             if anwser == self.qs[real].lower():
                 self.c.clear()
                 self.c.setText("Correct!" + " " + self.ques[self.x] + " " + self.qs[real])
                 self.label.clear()
                 pixmap = QPixmap(self.images[self.x])
-                self.label.setPixmap(pixmap)
+                pixmap_resized = pixmap.scaled(32, 32, Qt.KeepAspectRatio, Qt.FastTransformation)
+                self.label.setPixmap(QPixmap(pixmap_resized))
                 self.x+=1
                 self.q.clear()
                 self.q.setText(self.ques[self.x])
