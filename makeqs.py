@@ -124,6 +124,7 @@ class Ui_Window(object):
             fileName = fileName + ".json"
             with open(fileName, "w") as file:
                 json.dump(data, file)
+            file.close()
 
 
 
